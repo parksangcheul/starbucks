@@ -17,6 +17,7 @@
         _sb.headerHeight = _sb.$header.height();
         _sb.$search = $('.search');
         _sb.$searchInput = _sb.$search.find('input');
+        _sb.$searchImg = _sb.$search.find('img');
         _sb.searchValue= '';
         _sb.ENTER_KEY = 13;
     }
@@ -94,7 +95,7 @@
     }
 
     function searchHandler() {
-        $searchInput.on({
+        _sb.$searchInput.on({
             focus: function () {
                 focusSearch();
             },
@@ -106,9 +107,9 @@
             }
         });
 
-        $('.search img').on({
+        _sb.$searchImg.on({
            click: function () {
-               $searchInput.focus();
+               _sb.$searchInput.focus();
            }
         });
     }
@@ -118,13 +119,13 @@
         $search
             .stop()
             .animate({ width: 182 }, 600);
-        $searchInput
+        _sb.$searchInput
             .stop()
             .animate({ width: 182 }, 600)
             .attr({ placeholder: '통합검색' });
-        $('.search img').stop(false, true).fadeOut(600);
+        _sb.$searchImg.stop(false, true).fadeOut(600);
         if (_sb.searchValue !== '') {
-            $searchInput.val(_sb.searchValue);
+            _sb.$searchInput.val(_sb.searchValue);
         }
     }
 
@@ -132,8 +133,8 @@
         $search
             .stop()
             .animate({ width: 38 }, 600);
-        _sb.searchValue = $searchInput.val();
-        $searchInput
+        _sb.searchValue = _sb.$searchInput.val();
+        _sb.$searchInput
             .stop()
             .animate({ width: 38 }, 600)
             .attr({ placeholder: '' })
