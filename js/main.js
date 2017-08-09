@@ -174,6 +174,14 @@
         });
 
         _sb.promotionSlider = $('.promotion .slider ul').bxSlider({
+            pager: true,
+            controls: false,
+            autoControls: true,
+            pagerSelector: '.promotion .pager',
+            autoControlsSelector: '.promotion .auto-controls',
+            autoControlsCombine: true,
+            startText: '',
+            stopText: '',
             auto: true,
             pause: 5000,
             minSlides: 1,
