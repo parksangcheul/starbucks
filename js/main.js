@@ -29,6 +29,7 @@
         megaMenuHandler();
         searchHandler();
         firstAnimatons();
+        sliderHandler();
     }
 
     function toggleTopCard() {
@@ -116,7 +117,7 @@
 
 
     function focusSearch() {
-        $search
+        _sb.$search
             .stop()
             .animate({ width: 182 }, 600);
         _sb.$searchInput
@@ -130,7 +131,7 @@
     }
 
     function blurSearch() {
-        $search
+        _sb.$search
             .stop()
             .animate({ width: 38 }, 600);
         _sb.searchValue = _sb.$searchInput.val();
@@ -139,7 +140,7 @@
             .animate({ width: 38 }, 600)
             .attr({ placeholder: '' })
             .val('');
-        $search.stop(false, true).fadeIn(600);
+        _sb.$search.stop(false, true).fadeIn(600);
     }
 
     function submitSearch($this, event) {
@@ -157,5 +158,26 @@
         });
 
     }
+
+    function sliderHandler() {
+        $('.notice-line .slider ul').bxSlider({
+            mode: 'vertical',
+            pager: false,
+            controls: false,
+            auto: true,
+            pause: 5000
+        });
+
+        $('.promotion .slider ul').bxSlider({
+            auto: true,
+            minSlides: 1,
+            maxSlides: 3,
+            moveSlides: 1,
+            slideWidth: 819,
+            slideMargin: 10
+        });
+    }
+
+
 
 }(jQuery));
