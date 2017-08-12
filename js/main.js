@@ -22,6 +22,7 @@
         _sb.ENTER_KEY = 13;
         _sb.$promotion = $('.promotion .inner');
         _sb.$togglePromotionBtn = $('.notice-line .toggle-promotion');
+        _sb.currentSecIndex = 0;
     }
 
 
@@ -34,6 +35,8 @@
         sliderHandler();
         togglePromotionHandler();
         playTogglePromotionBtn();
+        windowScroll();
+        checkSectionOffsetTop();
 
     }
 
@@ -274,6 +277,45 @@
             yoyo: true,
             ease: Power0.easeNone
         });
+    }
+
+    function windowScroll() {
+        $(window).on('scroll', function () {
+            _sb.scrollLocate = $(this).scrollTop() + ($(this).height() / 2);
+
+            checkCurrentSection();
+        });
+    }
+
+    function checkCurrentSection() {
+        var secLength = _sb.secOffsetTop.length;
+
+        for (var i = 0; i < secLength; i++) {
+            if (_sb.scrollLocate >= _sb.secOffsetTop[i] && _sb.scrollLocate < _sb.secOffsetTop[i + 1]) {
+                if (_sb.currentSecIndex === i ) {
+                    return;
+                } else {
+                    _sb.currentSecIndex = i;
+
+
+                    changeSectionHandler();
+                }
+            }
+        }
+    }
+
+    function changeSectionHandler() {
+        console.log('현재 섹션은' + _sb.currentSecIndex);
+    }
+
+    function checkSectionOffsetTop() {
+        _sb.secOffsetTop = [];
+        $('.section').each(function () {
+            _sb.secOffsetTop.push(
+                $(this).offset().top
+            );
+        });
+        console.log(_sb.secOffsetTop);
     }
 
 }(jQuery));
