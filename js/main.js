@@ -37,7 +37,8 @@
         playTogglePromotionBtn();
         windowScroll();
         checkSectionOffsetTop();
-
+        setReturnToPositon();
+        toTopBtnHandler();
     }
 
     function toggleTopCard() {
@@ -306,6 +307,14 @@
 
     function changeSectionHandler() {
         console.log('현재 섹션은' + _sb.currentSecIndex);
+
+        returnToPosition('.season-product', 1, 4);
+        returnToPosition('.reserve', 1, 5);
+        returnToPosition('.favorite', 1, 6);
+        returnToPosition('.find-store', 1, 8);
+
+        resetReturnToPosition();
+        toggleToTop();
     }
 
     function checkSectionOffsetTop() {
@@ -316,6 +325,68 @@
             );
         });
         console.log(_sb.secOffsetTop);
+    }
+
+
+    function setReturnToPositon() {
+        $('.return-to-position').each(function () {
+            var x = 100;
+
+
+           if ($(this).hasClass('to-right')) { //왼쪽에서 오른쪽으로
+               // 음수
+               x *= -1;
+           } else if ($(this).hasClass('to-left')) { //오른쪽에서 왼쪽으로
+               // 양수
+               x = Math.abs(x);
+           }
+
+            TweenMax.set(this, { x: x, opacity: 0 });
+        });
+    }
+
+    function returnToPosition(sectionSelector, duration, whichSectionIndex) {
+        if (_sb.currentSecIndex === whichSectionIndex) {
+            $(sectionSelector + ' .return-to-position').each(function (index) {
+               TweenMax.to(this, duration, {
+                  delay: index * .3,
+                  x: 0,
+                  opacity: 1
+               });
+            });
+        }
+    }
+
+    function resetReturnToPosition() {
+        if (_sb.currentSecIndex <= 1) {
+            setReturnToPositon();
+        }
+    }
+
+    function toTopBtnHandler() {
+        $('#top-top').on('click', function () {
+            toTop();
+        });
+    }
+
+    function toTop() {
+        TweenMax.to(window, .7, { scrollTo: 0 });
+    }
+
+    function toggleToTop() {
+        if (_sb.currentSecIndex > 3) {
+            showToTop();
+        } else {
+            hideToTop();
+        }
+    }
+
+    function showToTop() {
+        $('#to-top').stop(false, true).fadeIn(400);
+    }
+
+    function hideToTop() {
+        $('#to-top').stop(false, true).fadeOut(400);
     }
 
 }(jQuery));
