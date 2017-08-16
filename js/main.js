@@ -39,6 +39,7 @@
         checkSectionOffsetTop();
         setReturnToPositon();
         toTopBtnHandler();
+        pluginNiceScroll();
     }
 
     function toggleTopCard() {
@@ -215,6 +216,30 @@
             _sb.promotionSlider.goToNextSlide();
             _sb.promotionSlider.stopAuto();
         });
+
+        _sb.awardSlider = $('.award .slider ul').bxSlider({
+            pager: false,
+            controls: false,
+            auto: true,
+            pause: 3000,
+            minSlides: 5,
+            maxSlides: 5,
+            moveSlides: 1,
+            slideWidth: 192,
+            slideMargin: 35
+        });
+
+        $('.award .prev').on('click', function () {
+            _sb.awardSlider.goToPrevSlide();
+            _sb.awardSlider.stopAuto();
+            restarAwardSlider();
+        });
+        $('.award .next').on('click', function () {
+            _sb.awardSlider.goToNextSlide();
+            _sb.awardSlider.stopAuto();
+            restarAwardSlider();
+        });
+
     }
 
     function togglePromotionHandler() {
@@ -231,6 +256,7 @@
         _sb.$promotion
             .stop()
             .slideDown(400, function () {
+                $('html').getNiceScroll().resize();
                 _sb.$promotion.destroySlider();
             })
             .data({
@@ -266,6 +292,13 @@
         _sb.toggleZoom.pause();
     }
 
+    function restarAwardSlider() {
+        setTimeout(function () {
+            _sb.awardSlider.startAuto();
+        }, 4000);
+    }
+    
+    
     function random(min, max) {
         return parseFloat(Math.random() * (max - min) + min).toFixed(2);
     }
@@ -364,7 +397,7 @@
     }
 
     function toTopBtnHandler() {
-        $('#top-top').on('click', function () {
+        $('#to-top').on('click', function () {
             toTop();
         });
     }
@@ -374,7 +407,7 @@
     }
 
     function toggleToTop() {
-        if (_sb.currentSecIndex > 3) {
+        if (_sb.currentSecIndex > 3 ) {
             showToTop();
         } else {
             hideToTop();
@@ -387,6 +420,16 @@
 
     function hideToTop() {
         $('#to-top').stop(false, true).fadeOut(400);
+    }
+
+    function pluginNiceScroll() {
+        $('html').niceScroll({
+            cursorcolor: 'rgba(0,0,0,.7)',
+            cursorwidth: 10,
+            cursorborder: 'none',
+            cursorborderradius: 0,
+            zindex: 9999
+        });
     }
 
 }(jQuery));
